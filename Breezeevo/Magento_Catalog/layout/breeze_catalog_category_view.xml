@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-
+     <head>
+    <script type="breeze/async-js" src="js/category-drag-scroll.js"/>
+    </head>
     <body>
-        <!-- ✅ Place it inside the Breeze container -->
         <referenceContainer name="breeze.container">
-            <block class="Magento\Catalog\Block\Category\View"
+            <block class="Magento\Framework\View\Element\Template"
                    name="category.subcategories"
                    template="Magento_Catalog::category/subcategories.phtml">
                 <arguments>
@@ -13,7 +15,6 @@
                 </arguments>
             </block>
 
-            <!-- Optional: your JS loader block too -->
             <block class="Magento\Framework\View\Element\Template"
                    name="category.drag.script"
                    template="Magento_Catalog::category/category-drag-script.phtml" />

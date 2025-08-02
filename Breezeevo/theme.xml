@@ -2,4 +2,9 @@
        xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/theme.xsd">
     <title>Masaar Breeze Evo</title>
     <parent>Swissup/breeze-evolution</parent>
+    <layout>
+        <updates>
+            <update handle="breeze_catalog_category_view" />
+        </updates>
+    </layout>
 </theme>

@@ -3,11 +3,9 @@
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Masaar\Breezeevo\ViewModel\Category $viewModel */
-?>
-<!-- DEBUG: subcategories.phtml reached -->
-<?php
+
 $viewModel = $block->getViewModel();
-$subcategories = $viewModel->getSubcategories();
+$subcategories = $viewModel ? $viewModel->getSubcategories() : [];
 ?>
 
 <?php if (!empty($subcategories)): ?>
