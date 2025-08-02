@@ -1,0 +1,151 @@
+/* Core Container */
+.masaar-subnav-block {
+  width: var(--container-width);
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  padding: var(--container-padding);
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+/* Scroll Container */
+.masaar-subnav-block .drag-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  padding: 15px 0;
+  margin: 0 -15px;
+  scrollbar-width: none;
+  position: relative;
+}
+
+
+
+
+/* Navigation Items */
+.masaar-subnav-block .category-subnav-items {
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0 15px;
+  list-style: none;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+/* Individual Items with Drag Handles */
+.masaar-subnav-block .subnav-item {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* Drag Handle */
+.masaar-subnav-block .drag-handle {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: grab;
+  z-index: 1;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f5f5f5;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;  
+  white-space: nowrap;
+  transition: background-color 0.2s ease 0.1s;
+  border: 1px solid #e0e0e0;
+}
+
+/* Link Styling */
+.masaar-subnav-block .subnav-link {
+  display: inline-block; 
+  font-size: 14px;
+  font-weight: 500; 
+  text-decoration: none;
+  cursor: default;
+}
+
+/* Active State */
+.masaar-subnav-block .subnav-item.active .drag-handle {
+  background-color: #161C43;
+  color: #fff;
+  border-color: #161C43;
+  cursor: grabbing;
+}
+
+/* Desktop Drag States */
+@media (min-width: 769px) {
+  .masaar-subnav-block .drag-scroll.user-is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+  .masaar-subnav-block .drag-scroll.user-is-dragging .drag-handle {
+    cursor: grabbing;
+  }
+}
+
+/* Mobile Behavior */
+@media (max-width: 768px) {
+  .masaar-subnav-block .drag-scroll {
+    touch-action: pan-x;
+  }
+  .masaar-subnav-block .drag-handle {
+    display: inline-block;
+  }
+}
+
+
+/* Fade Effects */
+.masaar-subnav-block .drag-scroll::before,
+.masaar-subnav-block .drag-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.masaar-subnav-block .drag-scroll::before {
+  left: 0;
+ 
+}
+.masaar-subnav-block .drag-scroll::after {
+  right: 0;
+ 
+}
+.masaar-subnav-block .drag-scroll.has-scroll-left::before {
+  opacity: 1;
+}
+.masaar-subnav-block .drag-scroll.has-scroll-right::after {
+  opacity: 1;
+}
+
+/* RTL Support */
+html[dir="rtl"] .masaar-subnav-block .drag-scroll {
+  direction: rtl;
+}
+html[dir="rtl"] .masaar-subnav-block .category-subnav-items {
+  flex-direction: row-reverse;
+  padding-right: 15px;
+}
+html[dir="rtl"] .masaar-subnav-block .drag-scroll::before {
+  right: 0;
+  left: auto;
+  background: linear-gradient(to left, #fff, transparent);
+}
+html[dir="rtl"] .masaar-subnav-block .drag-scroll::after {
+  left: 0;
+  right: auto;
+  background: linear-gradient(to right, #fff, transparent);
+}

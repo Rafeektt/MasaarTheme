@@ -1,0 +1,131 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$registry = $objectManager->get('\Magento\Framework\Registry');
+
+$category = null;
+$product = $registry->registry('current_product');
+?>
+<div class="masaar-subnav-block" data-isolate-scroll="true">
+    <div class="drag-scroll-wrapper">
+        <div class="drag-scroll">
+            <ul class="category-subnav-items">
+            <?php if ($product && $product->getId()): ?>
+                <?php
+                $categories = $product->getCategoryCollection()
+                    ->addAttributeToSelect('*')
+                    ->addIsActiveFilter()
+                    ->setOrder('level', 'desc');
+                
+                if ($categories->getSize()):
+                    $grouped = [];
+                    
+                    foreach ($categories as $cat) {
+                        $parent = $cat->getParentCategory();
+                        if (!$parent || !$parent->getIsActive() || $parent->getLevel() < 2) continue;
+
+                        $siblings = $parent->getChildrenCategories();
+                        $siblingCount = is_array($siblings) ? count($siblings) : $siblings->count();
+                        if ($siblingCount === 0) continue;
+
+                        $grouped[$parent->getId()] = [
+                            'parent' => $parent,
+                            'siblings' => $siblings,
+                            'currentCatId' => $cat->getId()
+                        ];
+                    }
+                    
+                    foreach ($grouped as $group): 
+                        $activeSub = null;
+                        $otherSubs = [];
+                        
+                        foreach ($group['siblings'] as $subcategory) {
+                            if (!$subcategory->getIsActive()) continue;
+                            if ($subcategory->getId() == $group['currentCatId']) {
+                                $activeSub = $subcategory;
+                            } else {
+                                $otherSubs[] = $subcategory;
+                            }
+                        }
+                        ?>
+                        <?php if ($activeSub): ?>
+                            <li class="subnav-item active">
+                                <div class="drag-handle">
+                                <a href="<?= $escaper->escapeUrl($activeSub->getUrl()) ?>" class="subnav-link">
+                                    <?= $escaper->escapeHtml($activeSub->getName()) ?>
+                                </a></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php foreach ($otherSubs as $subcategory): ?>
+                            <li class="subnav-item">
+                                <div class="drag-handle">
+                                <a href="<?= $escaper->escapeUrl($subcategory->getUrl()) ?>" class="subnav-link">
+                                    <?= $escaper->escapeHtml($subcategory->getName()) ?>
+                                </a></div>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php else: ?>
+                <?php
+                if (method_exists($block, 'getCurrentCategory')) {
+                    $category = $block->getCurrentCategory();
+                }
+                
+                if ($category && $category->getId()):
+                    $subcategories = $category->getChildrenCategories();
+                    $subCount = is_array($subcategories) ? count($subcategories) : $subcategories->count();
+                    
+                    if ($subCount === 0):
+                        $parentCategory = $category->getParentCategory();
+                        if ($parentCategory && $parentCategory->getId()) {
+                            $subcategories = $parentCategory->getChildrenCategories();
+                            $subCount = is_array($subcategories) ? count($subcategories) : $subcategories->count();
+                        }
+                    endif;
+                    
+                    if ($subCount > 0):
+                        $activeSub = null;
+                        $otherSubs = [];
+                        
+                        foreach ($subcategories as $subcategory) {
+                            if (!$subcategory->getIsActive()) continue;
+                            if ($subcategory->getId() == $category->getId()) {
+                                $activeSub = $subcategory;
+                            } else {
+                                $otherSubs[] = $subcategory;
+                            }
+                        }
+                        ?>
+                        <?php if ($activeSub): ?>
+                            <li class="subnav-item active">
+                                <div class="drag-handle">
+                                <a href="<?= $escaper->escapeUrl($activeSub->getUrl()) ?>" class="subnav-link">
+                                    <?= $escaper->escapeHtml($activeSub->getName()) ?>
+                                </a></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php foreach ($otherSubs as $subcategory): ?>
+                            <li class="subnav-item">
+                                <div class="drag-handle">
+                                <a href="<?= $escaper->escapeUrl($subcategory->getUrl()) ?>" class="subnav-link">
+                                    <?= $escaper->escapeHtml($subcategory->getName()) ?>
+                                </a></div>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+require(['js/category-drag-scroll'], function(init) {
+  if (typeof init === 'function') {
+    init();
+  }
+});
+</script>

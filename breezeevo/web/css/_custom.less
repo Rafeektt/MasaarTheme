@@ -1,0 +1,50 @@
+@import 'custom/layout/_product-grid.less';
+@import 'custom/layout/_footer.less';
+@import 'custom/layout/_category-subnav.less';
+@import 'custom/layout/_products.less';
+
+.page-main::before,
+.page-main::after,
+.page-footer .block.newsletter .title::before,
+.block-hero .block-title::before,
+.page-bottom .block .block-title::before,
+.cms-index-index .page-wrapper .main .block .block-title::before,
+.catalog-product-view .main .container > .block .block-title::before,
+.catalog-product-view .main > .block .block-title::before {
+  background: none !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  content: none !important;
+}
+
+@media (min-width: 768px) {
+  .masaar-subnav-block,
+  .toolbar.toolbar-products,
+  .sidebar.sidebar-main {
+    border: 1px solid #eee;
+    border-radius: 25px;
+    padding: 12px;
+    background: #fff; 
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sidebar.sidebar-additional .block.block-compare,
+  .sidebar.sidebar-additional .widget-recent {
+    border: 1px solid #eee;
+    border-radius: 25px;
+    padding: 12px;
+    background: #fff;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+
+  .sidebar.sidebar-main .block-title,
+  .sidebar.sidebar-additional .block.block-compare .block-title,
+  .sidebar.sidebar-additional .widget-recent .block-title {
+    border-bottom: 1px solid #ddd;
+  }
+}
