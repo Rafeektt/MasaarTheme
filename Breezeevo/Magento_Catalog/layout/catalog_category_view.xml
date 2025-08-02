@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
-      layout="1column">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 
     <body>
-        <referenceContainer name="content">
-            <!-- Subcategory Navigation -->
+        <!-- ✅ Place it inside the Breeze container -->
+        <referenceContainer name="breeze.container">
             <block class="Magento\Catalog\Block\Category\View"
                    name="category.subcategories"
                    template="Magento_Catalog::category/subcategories.phtml">
@@ -14,7 +13,7 @@
                 </arguments>
             </block>
 
-            <!-- JavaScript Loader for Drag Scroll -->
+            <!-- Optional: your JS loader block too -->
             <block class="Magento\Framework\View\Element\Template"
                    name="category.drag.script"
                    template="Magento_Catalog::category/category-drag-script.phtml" />
