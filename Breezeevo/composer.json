@@ -1,13 +1,13 @@
 {
-    "name": "masaar/Breezeevo",
-    "description": "Masaar Breeze Evolution Theme",
+    "name": "Masaar/Breezeevo",
+    "description": "Masaar Evolution Theme",
     "type": "magento2-theme",
     "version": "1.0.0",
     "license": "proprietary",
     "authors": [
         {
             "name": "Masaar Team",
-            "email": "support@masaar.com"
+            "email": "t.rafeee@gmail.com"
         }
     ],
     "require": {
