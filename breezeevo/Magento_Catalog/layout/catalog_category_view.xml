@@ -7,7 +7,11 @@
         <referenceContainer name="page.top">
             <block class="Magento\Catalog\Block\Category\View"
                    name="category.subcategories"
-                   template="Magento_Catalog::category/subcategories.phtml"
+                   template="Magento_Catalog::category/subcategories.phtml">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">Masaar\Breezeevo\ViewModel\Category</argument>
+                </arguments>
+            </block>
                    after="breadcrumbs"/>
         </referenceContainer>
     </body>

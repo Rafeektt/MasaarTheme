@@ -1,0 +1,22 @@
+{
+    "name": "masaar/breezeevo",
+    "description": "Masaar Breeze Evolution Theme",
+    "type": "magento2-theme",
+    "version": "1.0.0",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Masaar Team",
+            "email": "support@masaar.com"
+        }
+    ],
+    "require": {
+        "magento/framework": "*",
+        "swissup/theme-frontend-breeze": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ]
+    }
+}

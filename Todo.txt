@@ -1,0 +1,60 @@
+# Context:
+I’m working with a Magento 2 custom theme named "breezeevo", which extends the Breeze frontend stack. The theme is functional but has accumulated some legacy and suboptimal practices that I want to clean up before production deployment.
+
+# Goal:
+Refactor the theme to follow modern Magento 2 and Breeze standards for performance, maintainability, and scalability.
+
+# Files involved:
+- Theme root: MasaarTheme/breezeevo/
+- JS: web/js/category-drag-scroll.js
+- CSS: web/css/custom/layout/_products.less, _product-grid.less, _custom.less
+- Templates: Magento_Catalog/templates/category/subcategories.phtml, product/list.phtml, etc.
+- Layout XML: Magento_Theme/layout/breeze_default.xml
+
+# Tasks to perform:
+
+1. **Remove Direct Use of ObjectManager**
+   - `subcategories.phtml` uses `\Magento\Framework\App\ObjectManager`. Replace this with a ViewModel that retrieves the category.
+   - Register the ViewModel via layout XML.
+
+2. **Eliminate Redundant JS Loading**
+   - `category-drag-scroll.js` is loaded in both layout XML and inside `subcategories.phtml`.
+   - Keep only the layout XML method: `<script src="js/category-drag-scroll.js" />`
+   - Remove the `<script>` tag from `.phtml`.
+
+3. **Remove Legacy Luma CSS Classes**
+   - The LESS file `_custom.less` reintroduces styles for `.product-item`, `.block`, `.primary`, `.secondary`, `.button`, etc.
+   - Replace these with modern BEM-style semantic class names like `.masaar-product-card`, `.masaar-footer__actions`, etc.
+   - Update the HTML structure in templates to reflect the new class names.
+
+4. **Merge and Clean CSS Duplication**
+   - `_product-grid.less` and `_products.less` share repeated styles.
+   - Create a new shared file `components/_product-card.less`, move the shared rules there.
+   - Refactor `_custom.less` to import the new structure.
+
+5. **Generate a `composer.json` for the theme**
+   - Create a proper `composer.json` file to allow version tracking and deployment.
+
+6. **Move static image (e.g. footer logo) to proper location**
+   - From: `en_US/media/foote_logo.png`
+   - To: `web/images/footer-logo.png`
+   - Update the reference in the LESS file accordingly.
+
+7. **Audit for translation functions**
+   - Wrap all visible text in `__()` functions in `.phtml` templates.
+
+8. **Ensure layout XML is correctly scoped**
+   - Review `breeze_default.xml` for any redundant or global configurations that should be moved to specific layout handles (like `catalog_category_view.xml`).
+
+# Deliverables:
+- Cleaned `list.phtml` or `subcategories.phtml` file using ViewModel
+- New ViewModel class PHP file
+- Updated layout XML to register ViewModel
+- Merged and refactored LESS files with semantic class structure
+- A `composer.json` file in theme root
+- Comments explaining any major structural or naming convention decisions
+
+# Notes:
+- Magento version: 2.4.8
+- Using native Breeze stack (no Luma fallback)
+- Theme namespace: MasaarTheme/Breezeevo
