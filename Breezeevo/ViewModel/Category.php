@@ -54,6 +54,7 @@ class Category implements ArgumentInterface
      */
     public function getSubcategories(): array
     {
+        $this->logger->debug('ViewModel: getSubcategories() method entered.');
         $subcategories = [];
         $category = $this->getCurrentCategory();
         $product = $this->getCurrentProduct();
