@@ -1,17 +1,23 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
 
     <body>
-        <referenceContainer name="page.top">
+        <referenceContainer name="content">
+            <!-- Subcategory Navigation -->
             <block class="Magento\Catalog\Block\Category\View"
                    name="category.subcategories"
-                   template="Magento_Catalog::category/subcategories.phtml"
-                   after="breadcrumbs">
+                   template="Magento_Catalog::category/subcategories.phtml">
                 <arguments>
                     <argument name="viewModel" xsi:type="object">Masaar\Breezeevo\ViewModel\Category</argument>
                 </arguments>
             </block>
+
+            <!-- JavaScript Loader for Drag Scroll -->
+            <block class="Magento\Framework\View\Element\Template"
+                   name="category.drag.script"
+                   template="Magento_Catalog::category/category-drag-script.phtml" />
         </referenceContainer>
     </body>
 </page>
