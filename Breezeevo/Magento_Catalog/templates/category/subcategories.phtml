@@ -1,0 +1,38 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Masaar\Breezeevo\ViewModel\Category $viewModel */
+?>
+<!-- DEBUG: subcategories.phtml reached -->
+<?php
+$viewModel = $block->getViewModel();
+$subcategories = $viewModel->getSubcategories();
+// -- DEBUGGING --
+echo '<!-- ViewModel Initialized: ' . ($viewModel ? 'Yes' : 'No') . ' -->';
+echo '<!-- Subcategory Count: ' . count($subcategories) . ' -->';
+echo '<!-- Current Category ID: ' . ($viewModel->getCurrentCategory() ? $viewModel->getCurrentCategory()->getId() : 'None') . ' -->';
+echo '<!-- Current Product ID: ' . ($viewModel->getCurrentProduct() ? $viewModel->getCurrentProduct()->getId() : 'None') . ' -->';
+// -- END DEBUGGING --
+?>
+
+<?php if (!empty($subcategories)): ?>
+    <div class="masaar-subnav-block" data-isolate-scroll="true">
+        <div class="drag-scroll-wrapper">
+            <div class="drag-scroll">
+                <ul class="category-subnav-items">
+                    <?php foreach ($subcategories as $subcategory): ?>
+                        <li class="subnav-item<?= $subcategory['active'] ? ' active' : '' ?>">
+                            <div class="drag-handle">
+                                <a href="<?= $escaper->escapeUrl($subcategory['item']->getUrl()) ?>" class="subnav-link">
+                                    <?= $escaper->escapeHtml($subcategory['item']->getName()) ?>
+                                </a>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <!-- DEBUG: subcategories array is empty -->
+<?php endif; ?>
