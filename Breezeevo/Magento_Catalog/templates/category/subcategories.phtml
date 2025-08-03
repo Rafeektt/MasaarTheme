@@ -1,12 +1,21 @@
-<?php echo '<!-- subcategories.phtml loaded -->'; ?>
 <?php
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Masaar\Breezeevo\ViewModel\Category $viewModel */
-
-$viewModel = $block->getViewModel();
-$subcategories = $viewModel ? $viewModel->getSubcategories() : [];
 ?>
+<!-- DEBUG: subcategories.phtml reached -->
+<?php
+$viewModel = $block->getViewModel();
+$subcategories = $viewModel->getSubcategories();
+?>
+
+<div style="border: 2px solid red; padding: 10px; margin: 10px 0;">
+    <h3>Subcategories Debug Info:</h3>
+    <pre><?php print_r($subcategories); ?></pre>
+    <?php if (empty($subcategories)): ?>
+        <p>No subcategories found or ViewModel returned empty array.</p>
+    <?php endif; ?>
+</div>
 
 <?php if (!empty($subcategories)): ?>
     <div class="masaar-subnav-block" data-isolate-scroll="true">
@@ -26,6 +35,4 @@ $subcategories = $viewModel ? $viewModel->getSubcategories() : [];
             </div>
         </div>
     </div>
-<?php else: ?>
-    <!-- DEBUG: subcategories array is empty -->
 <?php endif; ?>

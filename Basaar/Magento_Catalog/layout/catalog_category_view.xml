@@ -6,10 +6,11 @@
     <script type="breeze/async-js" src="js/category-drag-scroll.js"/>
     </head>
     <body>
-        <referenceContainer name="breeze.container">
-            <block class="Magento\Framework\View\Element\Template"
+        <referenceContainer name="page.top">
+            <block class="Magento\Catalog\Block\Category\View"
                    name="category.subcategories"
-                   template="Magento_Catalog::category/subcategories.phtml">
+                   template="Magento_Catalog::category/subcategories.phtml"
+                   after="breadcrumbs">
                 <arguments>
                     <argument name="viewModel" xsi:type="object">Masaar\Breezeevo\ViewModel\Category</argument>
                 </arguments>
@@ -17,7 +18,8 @@
 
             <block class="Magento\Framework\View\Element\Template"
                    name="category.drag.script"
-                   template="Magento_Catalog::category/category-drag-script.phtml" />
+                   template="Magento_Catalog::category/category-drag-script.phtml"
+                   after="category.subcategories" />
         </referenceContainer>
     </body>
 </page>
