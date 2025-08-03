@@ -7,6 +7,12 @@
 <?php
 $viewModel = $block->getViewModel();
 $subcategories = $viewModel->getSubcategories();
+// -- DEBUGGING --
+echo '<!-- ViewModel Initialized: ' . ($viewModel ? 'Yes' : 'No') . ' -->';
+echo '<!-- Subcategory Count: ' . count($subcategories) . ' -->';
+echo '<!-- Current Category ID: ' . ($viewModel->getCurrentCategory() ? $viewModel->getCurrentCategory()->getId() : 'None') . ' -->';
+echo '<!-- Current Product ID: ' . ($viewModel->getCurrentProduct() ? $viewModel->getCurrentProduct()->getId() : 'None') . ' -->';
+// -- END DEBUGGING --
 ?>
 
 <?php if (!empty($subcategories)): ?>
