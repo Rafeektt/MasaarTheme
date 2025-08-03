@@ -4,7 +4,7 @@
      
   <body>
         <referenceContainer name="page.top">
-            <block class="Magento\Catalog\Block\Category\View"
+            <block class="Magento\Framework\View\Element\Template"
                    name="product.subnav"
                    template="Magento_Catalog::category/subcategories.phtml"
                    after="breadcrumbs">

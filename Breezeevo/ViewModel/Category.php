@@ -53,9 +53,9 @@ class Category implements ArgumentInterface
                 }
             }
         } elseif ($category && $category->getId()) {
-            $children = $category->getChildrenCategories();
+            $children = $category->getChildrenCategories()->addAttributeToSelect('*');
             if (!$children->count() && $category->getParentCategory()) {
-                $children = $category->getParentCategory()->getChildrenCategories();
+                $children = $category->getParentCategory()->getChildrenCategories()->addAttributeToSelect('*');
             }
 
             foreach ($children as $item) {
