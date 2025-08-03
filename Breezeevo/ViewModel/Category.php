@@ -43,7 +43,7 @@ class Category implements ArgumentInterface
                     continue;
                 }
 
-                $siblings = $parent->getChildrenCategories();
+                $siblings = $parent->getChildrenCategories()->addAttributeToSelect('*');
                 foreach ($siblings as $item) {
                     if (!$item->getIsActive()) continue;
                     $subcategories[] = [
