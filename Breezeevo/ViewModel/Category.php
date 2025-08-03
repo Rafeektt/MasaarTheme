@@ -28,41 +28,45 @@ class Category implements ArgumentInterface
     public function getSubcategories(): array
     {
         $subcategories = [];
-        $category = $this->getCurrentCategory();
+        $currentCat = null;
+        $parentCategory = null;
+
+        // Determine the context: product page or category page
         $product = $this->getCurrentProduct();
+        $category = $this->getCurrentCategory();
 
         if ($product && $product->getId()) {
+            // On product page, get the most relevant category for the product
             $categories = $product->getCategoryCollection()
                 ->addAttributeToSelect('*')
                 ->addIsActiveFilter()
-                ->setOrder('level', 'desc');
-
-            foreach ($categories as $cat) {
-                $parent = $cat->getParentCategory();
-                if (!$parent || !$parent->getIsActive() || $parent->getLevel() < 2) {
-                    continue;
-                }
-
-                $siblings = $parent->getChildrenCategories()->addAttributeToSelect('*');
-                foreach ($siblings as $item) {
-                    if (!$item->getIsActive()) continue;
-                    $subcategories[] = [
-                        'item' => $item,
-                        'active' => $item->getId() == $cat->getId()
-                    ];
-                }
+                ->setOrder('level', 'DESC');
+            
+            if ($categories->count()) {
+                $currentCat = $categories->getFirstItem();
+                $parentCategory = $currentCat->getParentCategory();
             }
+
         } elseif ($category && $category->getId()) {
-            $children = $category->getChildrenCategories()->addAttributeToSelect('*');
-            if (!$children->count() && $category->getParentCategory()) {
-                $children = $category->getParentCategory()->getChildrenCategories()->addAttributeToSelect('*');
+            // On category page
+            $currentCat = $category;
+            // If the current category has children, it's the parent.
+            if ($category->getChildrenCount()) {
+                $parentCategory = $category;
+            } else {
+            // Otherwise, use its parent.
+                $parentCategory = $category->getParentCategory();
             }
+        }
+
+        // If we have a valid parent category, get its children
+        if ($parentCategory && $parentCategory->getId() && $parentCategory->getIsActive()) {
+            $children = $parentCategory->getChildrenCategories()->addAttributeToSelect('*')->addIsActiveFilter();
 
             foreach ($children as $item) {
-                if (!$item->getIsActive()) continue;
                 $subcategories[] = [
                     'item' => $item,
-                    'active' => $item->getId() == $category->getId()
+                    'active' => $currentCat && $item->getId() == $currentCat->getId()
                 ];
             }
         }
