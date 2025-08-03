@@ -4,10 +4,14 @@
      
   <body>
         <referenceContainer name="page.top">
-            <block class="Magento\Framework\View\Element\Template"
+            <block class="Magento\Catalog\Block\Category\View"
                    name="product.subnav"
                    template="Magento_Catalog::category/subcategories.phtml"
-                   after="breadcrumbs"/>
+                   after="breadcrumbs">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">Masaar\Breezeevo\ViewModel\Category</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
